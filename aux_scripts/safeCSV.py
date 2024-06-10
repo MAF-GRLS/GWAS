@@ -1,24 +1,22 @@
 import csv
 import sys
 
-def process_csv(input_file, output_file):
-    with open(input_file, 'r', newline='') as infile, open(output_file, 'w', newline='') as outfile:
+def process_csv(input_file):
+    with open(input_file, 'r', newline='') as infile:
         reader = csv.reader(infile, quotechar='"', delimiter=',', quoting=csv.QUOTE_MINIMAL)
-        writer = csv.writer(outfile, delimiter=',', quoting=csv.QUOTE_NONE, escapechar='\\')
+        writer = csv.writer(sys.stdout, delimiter=',', quoting=csv.QUOTE_NONE, escapechar='\\', lineterminator='\n')
 
         for row in reader:
-            new_row = [field.replace(',', ';') for field in row]
+            new_row = [field.replace(',', ';').replace('\n', ';') for field in row]
             writer.writerow(new_row)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <input_file> <output_file>")
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <input_file>")
         sys.exit(1)
 
     input_file = sys.argv[1]
-    output_file = sys.argv[2]
 
-    process_csv(input_file, output_file)
+    process_csv(input_file)
 
-    print("CSV processing complete. Output saved to", output_file)
 
