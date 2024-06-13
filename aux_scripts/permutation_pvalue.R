@@ -6,8 +6,8 @@ perm_pvalues <- list()
 num_permutations <- args[1] ## 1000
 # Read permutation p-values
 for (perm in 1:num_permutations) {
-  for (chr in 13) { #for (chr in 1:38)
-    perm_file <- paste0(args[2], ".chr", chr, ".", perm, ".mlma")
+  for (chr in args[2]) { #for (chr in 1:38)
+    perm_file <- paste0(args[3], ".chr", chr, ".", perm, ".mlma")
     perm_data <- read.table(perm_file, header = TRUE)
     perm_pvalues[[paste0("perm_", perm, "_chr_", chr)]] <- perm_data$p
   }
